@@ -1,9 +1,9 @@
-import React, {useRef} from 'react'
+import React, {useRef, useContext} from 'react'
 import styles from './NewTodo.module.css';
+import { TodosContext } from '../store/todos-context';
 
-const NewTodo:React.FC<{
-    onAdd: (todoText: string) => void,
-}> = (props) => {
+const NewTodo:React.FC = () => {
+    const todoCtx = useContext(TodosContext);
     const txtTodoRef= useRef<HTMLInputElement>(null);
 
     const submitHandler =(event: React.FormEvent) => {
@@ -13,7 +13,7 @@ const NewTodo:React.FC<{
         if(newTodo.trim().length === 0)
             return;
 
-        props.onAdd(newTodo);
+            todoCtx.addTodo(newTodo);
     }
   return (
     <form onSubmit={submitHandler} className={styles.form}>
